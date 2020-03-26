@@ -1,0 +1,15 @@
+<launch>
+
+
+
+  <node pkg="diggy" type="turtle_joy.py" name="robot">
+    <param name="scale_angular" value="1.5"/>
+    <param name="scale_linear" value="0.5"/>
+    <remap from="diggy_twist" to="turtle1/cmd_vel"/>
+    <remap from="diggy_joy" to="joy"/>
+  </node>
+
+  <node pkg="turtlesim" type ="turtlesim_node" name="sim"/>
+  <node pkg="joy" type="joy_node" name="joystick"/>
+
+</launch>
