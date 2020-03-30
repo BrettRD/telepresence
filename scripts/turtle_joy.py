@@ -1,13 +1,16 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
 import rospy
 from geometry_msgs.msg import Twist
 from sensor_msgs.msg import Joy
 
+
+
+
 def callback(stick):
     vel = Twist()
-    vel.angular.z = stick.axes[3]
-    vel.linear.x = stick.axes[4]
+    vel.angular.z = stick.axes[0]
+    vel.linear.x = stick.axes[1]
     pub.publish(vel)
 
 def main():

@@ -1,0 +1,19 @@
+<launch>
+
+
+<arg name="chat_room" default="robot_dance_party_7" />
+
+  <node pkg="diggy" type="rtc_string_bridge.py" name="str_a" output="screen" >
+    <remap from="diggy_data_in" to="string_a_in"/>
+    <remap from="diggy_data_out" to="string_a_out"/>
+    <param name="role" value="offer"/>
+    <param name="room" value="$(arg chat_room)"/>
+  </node>
+  <node pkg="diggy" type="rtc_string_bridge.py" name="str_b" output="screen" >
+    <remap from="diggy_data_in" to="string_b_in"/>
+    <remap from="diggy_data_out" to="string_b_out"/>
+    <param name="role" value="answer"/>
+    <param name="room" value="$(arg chat_room)"/>
+  </node>
+
+</launch>

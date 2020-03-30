@@ -1,15 +1,35 @@
 <launch>
+<arg name="chat_room" default="robot_dance_party_16" />
 
-
+  <!-- 
+  <node pkg="turtlesim" type ="turtlesim_node" name="sim"/>
+  -->
+  <node pkg="joy" type="joy_node" name="joystick"/>
 
   <node pkg="diggy" type="turtle_joy.py" name="robot">
-    <param name="scale_angular" value="1.5"/>
-    <param name="scale_linear" value="0.5"/>
     <remap from="diggy_twist" to="turtle1/cmd_vel"/>
-    <remap from="diggy_joy" to="joy"/>
+    <remap from="diggy_joy" to="joy_remote"/>
   </node>
 
-  <node pkg="turtlesim" type ="turtlesim_node" name="sim"/>
-  <node pkg="joy" type="joy_node" name="joystick"/>
+  <node pkg="diggy" type="string_joy_map.py" name="joy_side">
+    <remap from="diggy_joy_in" to="joy"/>
+    <remap from="diggy_joy_out" to="joy_remote"/>
+    <remap from="diggy_str_out" to="string_a_in"/>
+    <remap from="diggy_str_in" to="string_b_out"/>
+  </node>
+
+  <node pkg="diggy" type="rtc_string_bridge.py" name="str_a" output="screen" >
+    <remap from="diggy_data_in" to="string_a_in"/>
+    <remap from="diggy_data_out" to="string_a_out"/>
+    <param name="role" value="offer"/>
+    <param name="room" value="$(arg chat_room)"/>
+  </node>
+
+  <node pkg="diggy" type="rtc_string_bridge.py" name="str_b" output="screen" >
+    <remap from="diggy_data_in" to="string_b_in"/>
+    <remap from="diggy_data_out" to="string_b_out"/>
+    <param name="role" value="answer"/>
+    <param name="room" value="$(arg chat_room)"/>
+  </node>
 
 </launch>

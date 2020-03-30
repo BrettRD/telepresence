@@ -1,0 +1,39 @@
+version: '3'
+
+services:
+  master:
+    image: ros:melodic-ros-core-bionic
+    command: roscore
+
+  robot:
+    build: # ros_host
+    # set the context to catkin/src/ so packages can be copied in and compiled
+      context: ../../
+      dockerfile: ./diggy/docker/ros_host/Dockerfile
+    environment:
+      - "ROS_HOSTNAME=robot"
+      - "ROS_MASTER_URI=http://master:11311"
+    volumes:
+      - /dev/js0/:/dev/js0:ro
+    depends_on:
+      - master
+      - resolvable
+    command: roslaunch -v diggy logitech.launch
+
+    
+#  simulator:
+#    build: gazebo_host
+#    context: ../
+#    environment:
+#      - "ROS_HOSTNAME=simulator"
+#      - "ROS_MASTER_URI=http://master:11311"
+#    volumes:
+      # X11 forwarding
+#    command: rosrun roscpp_tutorials listener
+
+  resolvable:
+    image: mgood/resolvable
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock
+      - /etc/resolv.conf:/tmp/resolv.conf
+
