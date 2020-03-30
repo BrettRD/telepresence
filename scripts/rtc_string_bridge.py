@@ -30,7 +30,7 @@ def callback_ros(message):
         else:
             rospy.loginfo("channel not ready")
     else:
-        rospy.loginfo("loop not ready")
+        rospy.loginfo("async_io loop not ready")
 
 
 def callback_dc(message):
@@ -98,7 +98,7 @@ async def run_offer(pc, signaling):
 
     @channel.on("message")
     def on_message(message):
-        rospy.loginfo("received " + message)
+        #rospy.loginfo("received " + message)
         callback_dc(message)
 
 #        channel_log(channel, "<", message)

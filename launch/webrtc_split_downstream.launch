@@ -11,14 +11,14 @@
     <remap from="diggy_joy" to="joy_remote"/>
   </node>
 
-  <node pkg="diggy" type="string_joy_map.py" name="joy_side">
+  <node pkg="diggy" type="string_joy_map.py" name="string_to_joy">
+    <remap from="diggy_str_in" to="rtc_answer_node_out"/>
     <remap from="diggy_joy_out" to="joy_remote"/>
-    <remap from="diggy_str_in" to="string_b_out"/>
   </node>
 
-  <node pkg="diggy" type="rtc_string_bridge.py" name="str_b" output="screen" >
-    <remap from="diggy_data_in" to="string_b_in"/>
-    <remap from="diggy_data_out" to="string_b_out"/>
+  <node pkg="diggy" type="rtc_string_bridge.py" name="rtc_answer_node" output="screen" >
+    <remap from="diggy_data_in" to="rtc_answer_node_in"/>
+    <remap from="diggy_data_out" to="rtc_answer_node_out"/>
     <param name="role" value="answer"/>
     <param name="room" value="$(arg chat_room)"/>
   </node>

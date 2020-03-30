@@ -1,11 +1,32 @@
 version: '3'
 
 services:
+
   master:
     image: ros:melodic-ros-core-bionic
     command: roscore
     ports:
     - 11311:11311
+
+
+  controller:
+    build: # ros_host
+    # set the context to catkin/src/ so packages can be copied in and compiled
+      context: ../../
+      dockerfile: ./diggy/docker/ros_host/Dockerfile
+    environment:
+      - ROS_HOSTNAME=controller
+      - ROS_MASTER_URI=http://master:11311
+      - ROS_CHAT_ROOM=${ROS_CHAT_ROOM}
+    devices:
+      - /dev/input/js0:/dev/input/js0
+    depends_on:
+      - master
+      - resolvable
+    command: roslaunch --wait -v diggy webrtc_split_upstream.launch
+#    command: roslaunch --wait -v diggy logitech.launch
+
+
 
   robot:
     build: # ros_host
@@ -13,17 +34,15 @@ services:
       context: ../../
       dockerfile: ./diggy/docker/ros_host/Dockerfile
     environment:
-      - "ROS_HOSTNAME=robot"
-      - "ROS_MASTER_URI=http://master:11311"
-      - "ROS_CHAT_ROOM=robot_dance_party_5"
-    devices:
-      - /dev/input/:/dev/input/
+      - ROS_HOSTNAME=robot
+      - ROS_MASTER_URI=http://master:11311
+      - ROS_CHAT_ROOM=${ROS_CHAT_ROOM}
     depends_on:
       - master
       - resolvable
-    command: roslaunch --wait -v diggy logitech.launch
+    command: roslaunch --wait -v diggy webrtc_split_downstream.launch
 
-    
+
 #  simulator:
 #    build: gazebo_host
 #    context: ../

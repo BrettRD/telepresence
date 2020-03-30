@@ -4,14 +4,14 @@
 
   <node pkg="joy" type="joy_node" name="joystick"/>
 
-  <node pkg="diggy" type="string_joy_map.py" name="joy_side">
+  <node pkg="diggy" type="string_joy_map.py" name="joy_to_string">
     <remap from="diggy_joy_in" to="joy"/>
-    <remap from="diggy_str_out" to="string_a_in"/>
+    <remap from="diggy_str_out" to="rtc_offer_node_in"/>
   </node>
 
-  <node pkg="diggy" type="rtc_string_bridge.py" name="str_a" output="screen" >
-    <remap from="diggy_data_in" to="string_a_in"/>
-    <remap from="diggy_data_out" to="string_a_out"/>
+  <node pkg="diggy" type="rtc_string_bridge.py" name="rtc_offer_node" output="screen" >
+    <remap from="diggy_data_in" to="rtc_offer_node_in"/>
+    <remap from="diggy_data_out" to="rtc_offer_node_out"/>
     <param name="role" value="offer"/>
     <param name="room" value="$(arg chat_room)"/>
   </node>
