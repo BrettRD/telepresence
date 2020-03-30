@@ -4,6 +4,8 @@ services:
   master:
     image: ros:melodic-ros-core-bionic
     command: roscore
+    ports:
+    - 11311:11311
 
   robot:
     build: # ros_host
@@ -13,12 +15,13 @@ services:
     environment:
       - "ROS_HOSTNAME=robot"
       - "ROS_MASTER_URI=http://master:11311"
-    volumes:
-      - /dev/js0/:/dev/js0:ro
+      - "ROS_CHAT_ROOM=robot_dance_party_5"
+    devices:
+      - /dev/input/:/dev/input/
     depends_on:
       - master
       - resolvable
-    command: roslaunch -v diggy logitech.launch
+    command: roslaunch --wait -v diggy logitech.launch
 
     
 #  simulator:

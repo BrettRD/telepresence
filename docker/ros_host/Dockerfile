@@ -1,11 +1,40 @@
 FROM ros:melodic-robot
 
-RUN apt-get update
 
+#upgrade ffmpeg for aiortc av dependency
+RUN apt-get update && apt-get install -y software-properties-common
+RUN add-apt-repository ppa:jonathonf/ffmpeg-4
+RUN apt-get update && apt-get upgrade -y
+
+#ROS components
 RUN apt-get install -y \
     ros-melodic-ros-control \
     ros-melodic-ros-controllers \
     ros-melodic-joy
+
+#aiortc dependencies
+RUN apt-get install -y \
+    libavdevice-dev \
+    libavfilter-dev \
+    libopus-dev \
+    libvpx-dev \
+    libsrtp2-dev \
+    pkg-config
+
+#python3
+RUN apt-get install -y \
+    python3-pip
+
+#webrtc and other python libs
+RUN pip3 install \
+    pyyaml \
+    aiortc \
+    aiohttp \
+    rospkg \
+    opencv-python \
+    websockets
+
+
 
 VOLUME /root/.ros
 VOLUME /root/config

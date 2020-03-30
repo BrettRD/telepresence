@@ -1,0 +1,19 @@
+<launch>
+
+<arg name="chat_room" default="$(optenv ROS_CHAT_ROOM robot_dance_party_0)"/>
+
+  <node pkg="joy" type="joy_node" name="joystick"/>
+
+  <node pkg="diggy" type="string_joy_map.py" name="joy_side">
+    <remap from="diggy_joy_in" to="joy"/>
+    <remap from="diggy_str_out" to="string_a_in"/>
+  </node>
+
+  <node pkg="diggy" type="rtc_string_bridge.py" name="str_a" output="screen" >
+    <remap from="diggy_data_in" to="string_a_in"/>
+    <remap from="diggy_data_out" to="string_a_out"/>
+    <param name="role" value="offer"/>
+    <param name="room" value="$(arg chat_room)"/>
+  </node>
+
+</launch>
