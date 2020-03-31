@@ -13,7 +13,7 @@ services:
     build: # ros_host
     # set the context to catkin/src/ so packages can be copied in and compiled
       context: ../../
-      dockerfile: ./diggy/docker/ros_host/Dockerfile
+      dockerfile: ./telepresence/docker/ros_host/Dockerfile
     environment:
       - ROS_HOSTNAME=controller
       - ROS_MASTER_URI=http://master:11311
@@ -23,8 +23,8 @@ services:
     depends_on:
       - master
       - resolvable
-    command: roslaunch --wait -v diggy webrtc_split_upstream.launch
-#    command: roslaunch --wait -v diggy logitech.launch
+    command: roslaunch --wait -v telepresence webrtc_split_upstream.launch
+#    command: roslaunch --wait -v telepresence logitech.launch
 
 
 
@@ -32,7 +32,7 @@ services:
     build: # ros_host
     # set the context to catkin/src/ so packages can be copied in and compiled
       context: ../../
-      dockerfile: ./diggy/docker/ros_host/Dockerfile
+      dockerfile: ./telepresence/docker/ros_host/Dockerfile
     environment:
       - ROS_HOSTNAME=robot
       - ROS_MASTER_URI=http://master:11311
@@ -40,7 +40,7 @@ services:
     depends_on:
       - master
       - resolvable
-    command: roslaunch --wait -v diggy webrtc_split_downstream.launch
+    command: roslaunch --wait -v telepresence webrtc_split_downstream.launch
 
 
 #  simulator:

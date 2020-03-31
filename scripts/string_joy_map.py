@@ -23,15 +23,15 @@ def callback_str(msg):
 
 
 def main():
-    rospy.Subscriber("diggy_joy_in", Joy, callback_joy)
-    rospy.Subscriber("diggy_str_in", String, callback_str)
-    rospy.init_node('turtle_joy', anonymous=True)
+    rospy.Subscriber("joy_in", Joy, callback_joy)
+    rospy.Subscriber("str_in", String, callback_str)
+    rospy.init_node('string_joy_map', anonymous=True)
     rospy.spin()
 
 
 
 if __name__ == '__main__':
-    pub_joy = rospy.Publisher('diggy_joy_out', Joy, queue_size=10)
-    pub_str = rospy.Publisher('diggy_str_out', String, queue_size=10)
+    pub_joy = rospy.Publisher('joy_out', Joy, queue_size=10)
+    pub_str = rospy.Publisher('str_out', String, queue_size=10)
 
     main()

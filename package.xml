@@ -1,25 +1,24 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>diggy</name>
+  <name>telepresence</name>
   <version>0.0.0</version>
-  <description>The diggy package</description>
+  <description>Telepresence by means of webrtc, some python, and a lot of docker.</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag -->
   <!-- Example:  -->
-  <!-- <maintainer email="jane.doe@example.com">Jane Doe</maintainer> -->
-  <maintainer email="brettrd@todo.todo">brettrd</maintainer>
+  <maintainer email="brett.downing1@gmail.com">brettrd</maintainer>
 
 
   <!-- One license tag required, multiple allowed, one license per tag -->
   <!-- Commonly used license strings: -->
   <!--   BSD, MIT, Boost Software License, GPLv2, GPLv3, LGPLv2.1, LGPLv3 -->
   <license>TODO</license>
-
+  <!-- this package leans heavily on aiortc which is BSD. -->
 
   <!-- Url tags are optional, but multiple are allowed, one per tag -->
   <!-- Optional attribute type can be: website, bugtracker, or repository -->
   <!-- Example: -->
-  <!-- <url type="website">http://wiki.ros.org/diggy</url> -->
+  <!-- <url type="website">http://wiki.ros.org/telepresence</url> -->
 
 
   <!-- Author tags are optional, multiple are allowed, one per tag -->

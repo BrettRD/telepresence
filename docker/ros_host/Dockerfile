@@ -45,7 +45,7 @@ VOLUME /root/config
 
 #copy the catkin packages into workspace
 WORKDIR /root/catkin_ws/src
-COPY ./diggy ./diggy
+COPY ./telepresence ./telepresence
 COPY ./turtlebot ./turtlebot
 
 
@@ -53,6 +53,6 @@ COPY ./turtlebot ./turtlebot
 WORKDIR /root/catkin_ws
 RUN ["/bin/bash", "-c", "source /opt/ros/melodic/setup.bash; catkin_make"]
 
-ADD ./diggy/docker/ros_host/ros-entrypoint.sh /ros-entrypoint.sh
+ADD ./telepresence/docker/ros_host/ros-entrypoint.sh /ros-entrypoint.sh
 ENTRYPOINT [ "/ros-entrypoint.sh" ]
 

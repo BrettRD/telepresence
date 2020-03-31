@@ -14,12 +14,12 @@ def callback(stick):
     pub.publish(vel)
 
 def main():
-    rospy.Subscriber("diggy_joy", Joy, callback)
+    rospy.Subscriber("joy", Joy, callback)
     rospy.init_node('turtle_joy', anonymous=True)
     rospy.spin()
 
 
 
 if __name__ == '__main__':
-    pub = rospy.Publisher('diggy_twist', Twist, queue_size=10)
+    pub = rospy.Publisher('twist', Twist, queue_size=10)
     main()
