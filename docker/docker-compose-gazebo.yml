@@ -51,15 +51,13 @@ services:
     environment:
       - "ROS_HOSTNAME=simulator"
       - "ROS_MASTER_URI=http://master:11311"
+#      - DISPLAY=:0
+#    volumes:
+#      - /tmp/.X11-unix:/tmp/.X11-unix:rw
     depends_on:
       - master
       - resolvable
-    ports:
-      - 11345:11345
-      - 8080:8080
-      - 7681:7681
-    command: roslaunch --wait -v rrbot_gazebo rrbot_world.launch gui:=false headless:=true
-    
+    command: roslaunch --wait -v rrbot_gazebo rrbot_world.launch gui:=true headless:=false
 
   resolvable:
     image: mgood/resolvable

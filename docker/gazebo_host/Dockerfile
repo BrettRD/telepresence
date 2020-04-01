@@ -35,7 +35,17 @@ RUN apt-get install -y \
 
 RUN apt-get update &&  apt-get install -y \
     ros-melodic-gazebo-ros \
+    xvfb \
     && rm -rf /var/lib/apt/lists/*
+
+
+#settings for xvfb
+# setup virtual X server
+RUN mkdir /tmp/.X11-unix && \
+	chmod 1777 /tmp/.X11-unix && \
+	chown -R root:root /tmp/.X11-unix
+ENV QT_X11_NO_MITSHM 1
+ENV DISPLAY :99
 
 
 ##### set up workspace 

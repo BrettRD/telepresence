@@ -1,9 +1,7 @@
 FROM ros:melodic-robot
 
 #ROS components
-RUN apt-get install -y \
-    ros-melodic-ros-control \
-    ros-melodic-ros-controllers \
+RUN apt-get update && apt-get install -y \
     ros-melodic-joy \
     ros-melodic-turtlesim
 
