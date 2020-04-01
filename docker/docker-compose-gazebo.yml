@@ -58,10 +58,11 @@ services:
       - 11345:11345
       - 8080:8080
       - 7681:7681
+    command: roslaunch --wait -v rrbot_gazebo rrbot_world.launch gui:=false headless:=true
     
+
   resolvable:
     image: mgood/resolvable
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock
       - /etc/resolv.conf:/tmp/resolv.conf
-
