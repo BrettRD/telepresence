@@ -1,5 +1,8 @@
 <launch>
 
+  <!-- 
+  A minimal test case for the nuts and bolts of WebRTC
+  -->
 
 <arg name="chat_room" default="$(optenv ROS_CHAT_ROOM robot_dance_party_0)" />
 

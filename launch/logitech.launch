@@ -1,7 +1,13 @@
 <launch>
 
+  <!-- 
+  An all in one example of a joystick controlling a turtle via webrtc. 
+  -->
+
+
 <arg name="chat_room" default="$(optenv ROS_CHAT_ROOM robot_dance_party_0)"/>
 
+  <!-- Turtlesim removed for Docker, include it if you run this natively -->
   <!-- 
   <node pkg="turtlesim" type ="turtlesim_node" name="sim"/>
   -->
@@ -15,14 +21,16 @@
   <node pkg="telepresence" type="string_joy_map.py" name="joy_to_string">
     <remap from="joy_in" to="joy"/>
     <remap from="str_out" to="rtc_offer_node_in"/>
+    
+    <remap from="str_in" to="rtc_answer_node_str_in_unused"/>
+    <remap from="joy_out" to="rtc_answer_node_joy_out_unused"/>
   </node>
-
 
   <node pkg="telepresence" type="string_joy_map.py" name="string_to_joy">
     <remap from="joy_out" to="joy_remote"/>
     <remap from="str_in" to="rtc_answer_node_out"/>
 
-        <remap from="str_out" to="rtc_answer_node_str_out_unused"/>
+    <remap from="str_out" to="rtc_answer_node_str_out_unused"/>
     <remap from="joy_in" to="rtc_answer_node_joy_in_unused"/>
   </node>
 

@@ -2,6 +2,7 @@
 
 <arg name="chat_room" default="$(optenv ROS_CHAT_ROOM robot_dance_party_0)"/>
 
+  <!-- Turtlesim removed for Docker, include it if you run this natively -->
   <!-- 
   <node pkg="turtlesim" type ="turtlesim_node" name="sim"/>
   -->

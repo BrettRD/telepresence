@@ -2,7 +2,7 @@
 <package format="2">
   <name>telepresence</name>
   <version>0.0.0</version>
-  <description>Telepresence by means of webrtc, some python, and a lot of docker.</description>
+  <description>Telepresence by means of WebRTC, some python, and a lot of Docker.</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag -->
   <!-- Example:  -->

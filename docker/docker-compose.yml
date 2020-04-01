@@ -24,7 +24,6 @@ services:
       - master
       - resolvable
     command: roslaunch --wait -v telepresence webrtc_split_upstream.launch
-#    command: roslaunch --wait -v telepresence logitech.launch
 
 
 
@@ -42,16 +41,6 @@ services:
       - resolvable
     command: roslaunch --wait -v telepresence webrtc_split_downstream.launch
 
-
-#  simulator:
-#    build: gazebo_host
-#    context: ../
-#    environment:
-#      - "ROS_HOSTNAME=simulator"
-#      - "ROS_MASTER_URI=http://master:11311"
-#    volumes:
-      # X11 forwarding
-#    command: rosrun roscpp_tutorials listener
 
   resolvable:
     image: mgood/resolvable

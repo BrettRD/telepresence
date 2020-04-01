@@ -1,29 +1,27 @@
 FROM ros:melodic-robot
 
+#ROS components
+RUN apt-get install -y \
+    ros-melodic-ros-control \
+    ros-melodic-ros-controllers \
+    ros-melodic-joy \
+    ros-melodic-turtlesim
+
 
 #upgrade ffmpeg for aiortc av dependency
 RUN apt-get update && apt-get install -y software-properties-common
 RUN add-apt-repository ppa:jonathonf/ffmpeg-4
 RUN apt-get update && apt-get upgrade -y
 
-#ROS components
+#pip3 and aiortc dependencies
 RUN apt-get install -y \
-    ros-melodic-ros-control \
-    ros-melodic-ros-controllers \
-    ros-melodic-joy
-
-#aiortc dependencies
-RUN apt-get install -y \
+    python3-pip \
     libavdevice-dev \
     libavfilter-dev \
     libopus-dev \
     libvpx-dev \
     libsrtp2-dev \
     pkg-config
-
-#python3
-RUN apt-get install -y \
-    python3-pip
 
 #webrtc and other python libs
 RUN pip3 install \
@@ -35,19 +33,9 @@ RUN pip3 install \
     websockets
 
 
-
-VOLUME /root/.ros
-VOLUME /root/config
-
-# ethernet/ip control ports
-#EXPOSE 2222/udp
-#EXPOSE 44818
-
 #copy the catkin packages into workspace
 WORKDIR /root/catkin_ws/src
 COPY ./telepresence ./telepresence
-COPY ./turtlebot ./turtlebot
-
 
 # build packages
 WORKDIR /root/catkin_ws

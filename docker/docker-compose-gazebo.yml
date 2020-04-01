@@ -1,0 +1,67 @@
+version: '3'
+
+services:
+  
+  master:
+    image: ros:melodic-ros-core-bionic
+    command: roscore
+    ports:
+    - 11311:11311
+
+
+#  controller:
+#    build: # ros_host
+#    # set the context to catkin/src/ so packages can be copied in and compiled
+#      context: ../../
+#      dockerfile: ./telepresence/docker/ros_host/Dockerfile
+#    environment:
+#      - ROS_HOSTNAME=controller
+#      - ROS_MASTER_URI=http://master:11311
+#      - ROS_CHAT_ROOM=${ROS_CHAT_ROOM}
+#    devices:
+#      - /dev/input/js0:/dev/input/js0
+#    depends_on:
+#      - master
+#      - resolvable
+#    command: roslaunch --wait -v telepresence webrtc_split_upstream.launch
+
+
+
+#  robot:
+#    build: # ros_host
+#    # set the context to catkin/src/ so packages can be copied in and compiled
+#      context: ../../
+#      dockerfile: ./telepresence/docker/ros_host/Dockerfile
+#    environment:
+#      - ROS_HOSTNAME=robot
+#      - ROS_MASTER_URI=http://master:11311
+#      - ROS_CHAT_ROOM=${ROS_CHAT_ROOM}
+#    depends_on:
+#      - master
+#      - resolvable
+#    command: roslaunch --wait -v telepresence webrtc_split_downstream.launch
+
+
+
+
+  simulator:
+    build: #gazebo_host
+      context: ../../
+      dockerfile: ./telepresence/docker/gazebo_host/Dockerfile
+    environment:
+      - "ROS_HOSTNAME=simulator"
+      - "ROS_MASTER_URI=http://master:11311"
+    depends_on:
+      - master
+      - resolvable
+    ports:
+      - 11345:11345
+      - 8080:8080
+      - 7681:7681
+    
+  resolvable:
+    image: mgood/resolvable
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock
+      - /etc/resolv.conf:/tmp/resolv.conf
+
