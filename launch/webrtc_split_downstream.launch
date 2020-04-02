@@ -1,6 +1,6 @@
 <launch>
 
-<arg name="chat_room" default="$(optenv ROS_CHAT_ROOM robot_dance_party_0)"/>
+  <arg name="chat_room" default="$(optenv ROS_CHAT_ROOM robot_dance_party_0)"/>
 
   <!-- Turtlesim removed for Docker, include it if you run this natively -->
   <!-- 
@@ -23,8 +23,10 @@
   <node pkg="telepresence" type="rtc_string_bridge.py" name="rtc_answer_node" output="screen" >
     <remap from="data_in" to="rtc_answer_node_in"/>
     <remap from="data_out" to="rtc_answer_node_out"/>
+    <remap from="video_out" to="rtc_answer_node_video_out"/>
     <param name="role" value="answer"/>
     <param name="room" value="$(arg chat_room)"/>
+    <param name="vid_src" value=""/>
   </node>
 
 </launch>

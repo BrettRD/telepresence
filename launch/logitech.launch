@@ -5,48 +5,15 @@
   -->
 
 
-<arg name="chat_room" default="$(optenv ROS_CHAT_ROOM robot_dance_party_0)"/>
+  <arg name="chat_room" default="$(optenv ROS_CHAT_ROOM robot_dance_party_0)"/>
 
   <!-- Turtlesim removed for Docker, include it if you run this natively -->
   <!-- 
   <node pkg="turtlesim" type ="turtlesim_node" name="sim"/>
   -->
-  <node pkg="joy" type="joy_node" name="joystick"/>
 
-  <node pkg="telepresence" type="turtle_joy.py" name="robot">
-    <remap from="twist" to="turtle1/cmd_vel"/>
-    <remap from="joy" to="joy_remote"/>
-  </node>
+  <include file="$(find telepresence)/launch/webrtc_split_upstream.launch" ns="upstream"/>
+  <include file="$(find telepresence)/launch/webrtc_split_downstream.launch" ns="downstream"/>
 
-  <node pkg="telepresence" type="string_joy_map.py" name="joy_to_string">
-    <remap from="joy_in" to="joy"/>
-    <remap from="str_out" to="rtc_offer_node_in"/>
-    
-    <remap from="str_in" to="rtc_answer_node_str_in_unused"/>
-    <remap from="joy_out" to="rtc_answer_node_joy_out_unused"/>
-  </node>
-
-  <node pkg="telepresence" type="string_joy_map.py" name="string_to_joy">
-    <remap from="joy_out" to="joy_remote"/>
-    <remap from="str_in" to="rtc_answer_node_out"/>
-
-    <remap from="str_out" to="rtc_answer_node_str_out_unused"/>
-    <remap from="joy_in" to="rtc_answer_node_joy_in_unused"/>
-  </node>
-
-
-  <node pkg="telepresence" type="rtc_string_bridge.py" name="rtc_offer_node" output="screen" >
-    <remap from="data_in" to="rtc_offer_node_in"/>
-    <remap from="data_out" to="rtc_offer_node_out"/>
-    <param name="role" value="offer"/>
-    <param name="room" value="$(arg chat_room)"/>
-  </node>
-
-  <node pkg="telepresence" type="rtc_string_bridge.py" name="rtc_answer_node" output="screen" >
-    <remap from="data_in" to="rtc_answer_node_in"/>
-    <remap from="data_out" to="rtc_answer_node_out"/>
-    <param name="role" value="answer"/>
-    <param name="room" value="$(arg chat_room)"/>
-  </node>
 
 </launch>

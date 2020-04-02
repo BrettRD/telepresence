@@ -16,6 +16,10 @@ from aiortc.contrib.media import MediaBlackhole, MediaPlayer, MediaRecorder
 
 import rospy
 from std_msgs.msg import String
+from sensor_msgs.msg import Image
+
+from media_publisher import VideoPublisher
+
 
 channel = None
 loop = None
@@ -109,15 +113,26 @@ async def run(pc, player, recorder, signaling, role):
 
 if __name__ == '__main__':
     rospy.init_node('webrtc', anonymous=True)
-    #pub_video = rospy.Publisher('video_out', Image, queue_size=10)
+    
+    vid_src = rospy.get_param("~vid_src", "aiortc")
+    vid_src_file = rospy.get_param("~vid_src_file", "/dev/video0")
+    vid_src_format = rospy.get_param("~vid_src_format", 'v4l2')
+    vid_src_opts = {'video_size': '640x480'}
+    
+    if vid_src == "":
+        vid_src = None
+    
+    
+    pub_video = rospy.Publisher('video_out', Image, queue_size=10)
+    #pub_video = None
+    
+    
     pub_data = rospy.Publisher('data_out', String, queue_size=10)
     rospy.Subscriber("data_in", String, callback_ros_data)
 
     apprtc_room = rospy.get_param("~room")
     role = rospy.get_param("~role")
 
-    #vid_src = rospy.get_param("~vid_src", "'/dev/video0', format='v4l2', options={'video_size': '640x480'")
-    vid_src = None
 
     
     signaling = ApprtcSignaling(apprtc_room)
@@ -125,16 +140,16 @@ if __name__ == '__main__':
     pc = RTCPeerConnection()
 
     # create media source
-    #if vid_src:
-    #    player = MediaPlayer(vid_src)
-    #else:
-    player = None
+    if vid_src == "aiortc":
+        player = MediaPlayer(vid_src_file, format=vid_src_format, options=vid_src_opts)
+    else:
+        player = None
 
     # create media sink
-    #if False:
-    #    recorder = VideoPublisher(pub_video)
-    #else:
-    recorder = MediaBlackhole()
+    if pub_video:
+        recorder = VideoPublisher(pub_video)
+    else:
+        recorder = MediaBlackhole()
 
 
     # run event loop
