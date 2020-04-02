@@ -12,8 +12,11 @@
   <node pkg="turtlesim" type ="turtlesim_node" name="sim"/>
   -->
 
-  <include file="$(find telepresence)/launch/webrtc_split_upstream.launch" ns="upstream"/>
-  <include file="$(find telepresence)/launch/webrtc_split_downstream.launch" ns="downstream"/>
-
+  <include file="$(find telepresence)/launch/webrtc_split_upstream.launch" ns="upstream">
+    <arg name="chat_room" value="$(arg chat_room)"/>
+  </include>
+  <include file="$(find telepresence)/launch/webrtc_split_downstream.launch" ns="downstream">
+    <arg name="chat_room" value="$(arg chat_room)"/>
+  </include>
 
 </launch>
