@@ -3,8 +3,8 @@ FROM ros:melodic-robot
 #ROS components
 RUN apt-get update && apt-get install -y \
     ros-melodic-joy \
-    ros-melodic-turtlesim
-
+    ros-melodic-turtlesim \
+    ros-melodic-cv-bridge
 
 #upgrade ffmpeg for aiortc av dependency
 RUN apt-get update && apt-get install -y software-properties-common

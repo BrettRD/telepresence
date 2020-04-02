@@ -24,9 +24,11 @@
     <remap from="data_in" to="rtc_answer_node_in"/>
     <remap from="data_out" to="rtc_answer_node_out"/>
     <remap from="video_out" to="rtc_answer_node_video_out"/>
-    <param name="role" value="answer"/>
+    <param name="role" value="offer"/>
     <param name="room" value="$(arg chat_room)"/>
-    <param name="vid_src" value=""/>
+    <param name="vid_src" value="aiortc"/>
+    <param name="vid_src_file" value="/dev/video0"/>
+    <param name="vid_src_format" value="v4l2"/>
   </node>
 
 </launch>
