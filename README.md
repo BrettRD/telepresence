@@ -3,8 +3,11 @@ Telepresence by means of ROS, webrtc, some python, and a lot of Docker.
 
 This is a ros package that hopes to be turnkey on host machines without ROS.
 
-This package forwards joystick input over WebRTC, and maps it to a turtlesim node for output.\
-The WebRTC video feed is only partly built, and the audio is going to take some doing.
+This package forwards joystick input over WebRTC, and maps it to a turtlesim node;\
+and forwards video from a webcam over WebRTC to a ROS image topic. \
+The WebRTC video can capture directly from a device, and can emit onto a ROS node. \
+The audio is going to take some doing.
+
 
 ## Installation:
 Get Docker,\
@@ -18,14 +21,15 @@ I'd like to get X11 forwarding from the container to the host to remove the need
 ## Docker:
 Head into `telepresence/docker/` and run `docker-compose up --build`\
 Then run `source join-ros.sh` to get your native ROS to refer to the roscore running in docker.\
-To see the turtlebot, run on the host `rosrun turtlesim turtlesim_node`\
+To see the turtlebot, run on the host `rosrun turtlesim turtlesim_node` \
+To see webcam output, run rqt on the host
 
 ## Future work:
-- WebRTC signalling server in a docker container
-- Javascript client for control and video, also in Docker
-- WebRTC stream <-> ROS image topic
-- WebRTC stream <-> ROS audio topic
+- Javascript client for control and video, with a server in Docker
+- WebRTC signalling server in Docker
 - Examples of this running on robots made of zip ties and milk crates.
+- WebRTC stream <-> ROS audio topic
+- ROS image topic -> WebRTC stream
 
 ## Known issues:
 ### ROS on the host dependency 
@@ -35,11 +39,13 @@ Patches that either enable X11 forwarding, or provide more interesting interacti
 ### Chatroom collisions:
 This uses AppRTC for the WebRTC signalling server, and doesn't close the connection nicely.\
 If the chatroom name has been used in the last 24hrs, the WebRTC nodes will crash.\
-Start a new chatroom by changing the string in `telepresence/docker/.env'\
+Start a new chatroom by changing the string in `telepresence/docker/.env` \
 Ideally this would move to a different signalling server which has a separate docker container.
 
 ### Hardcoded Joystick name:
-The docker-compose.yml refers to `/dev/input/js0`, and will complain bitterly if it doesn't exist.\
-Patches welcome to support alternative input devices.\
+The docker-compose.yml refers to `/dev/input/js0`, and will complain bitterly if it doesn't exist. \
+Patches welcome to support alternative input devices. \
 Ultimately, control will be via a browser anyway
 
+### Hardcoded Camera name:
+Same as above
