@@ -30,7 +30,6 @@ def callback_ros_data(message):
     if  loop != None:
         if  channel != None:
             loop.call_soon_threadsafe(channel.send, message.data)
-            #channel.send(message.data)
         else:
             rospy.loginfo("channel not ready\n")
     else:
@@ -39,6 +38,7 @@ def callback_ros_data(message):
 
 def callback_rtc_data(message):
     pub_data.publish(message)
+
 
 #XXX need callbacks for audio and video in and out
 #src/aiortc/contrib/media.py:378    handles frames:   frame = await track.recv()
@@ -56,9 +56,6 @@ async def run(pc, player, recorder, signaling, role):
         if player and player.video:
             pc.addTrack(player.video)
             rospy.loginfo("local created video\n")
-        #else:
-        #    pc.addTrack(FlagVideoStreamTrack())
-
 
     @pc.on("track")
     def on_track(track):
@@ -74,7 +71,6 @@ async def run(pc, player, recorder, signaling, role):
 
         @channel.on("message")
         def on_message(message):
-            #rospy.loginfo("received " + message + "\n")
             callback_rtc_data(message)
 
     # connect signaling
@@ -89,6 +85,12 @@ async def run(pc, player, recorder, signaling, role):
 
         await pc.setLocalDescription(await pc.createOffer())
         await signaling.send(pc.localDescription)
+
+        @channel.on("message")
+        def on_message(message):
+            callback_rtc_data(message)
+
+
 
     # consume signaling
     while True:
